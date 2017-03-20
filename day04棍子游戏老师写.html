@@ -1,0 +1,162 @@
+。<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>英雄难过棍子关</title>
+	</head>
+	<style>
+		*{margin:0;padding: 0;}
+		div{width: 500px;text-align: center;margin: 40px auto;}
+	</style>
+	<body>
+		<div>
+			<canvas id="canvas" width="300" height="500">
+				你该换浏览器了
+			</canvas>
+		</div>
+	</body>
+	<script>
+		var canvas = document.getElementById("canvas");
+		var ctx = canvas.getContext("2d");
+		var j1x = 0,j1y = 0,j1w = 60;
+		var j2x = 0,j2y = 0,j2w = 0;
+		var j3x = 0,j3y = 0,j3w = 0;
+		var playx = 0,playy = 0,fenshu = 0;
+		var gunzix = 0,gunziy=0,gunzic = 0;
+		
+		start();
+		window.addEventListener("keydown",dokeydown,false);
+		window.addEventListener("keyup",dokeyup,false);
+		//刚打开页面初始化
+		function start() {
+			ctx.clearRect(0,0,300,500);
+			j1x = 0,j1y = 0,j1w = 60;
+			j2x = 0,j2y = 0,j2w = 0;
+			j3x = 0,j3y = 0,j3w = 0;
+			playx = 40,playy = 330,fenshu = 0;
+			gunzix = 60,gunziy=330,gunzic = 0;
+			ctx.fillStyle = "#ABCDEF";
+			ctx.fillRect(0,0,300,500);
+			ctx.fillStyle = "black";
+			ctx.fillRect(j1x,350,j1w,150);
+			j2x = Math.floor(Math.random()*160+20)+j1x+j1w;
+			j2w = Math.floor(Math.random()*60+20);
+			ctx.fillRect(j2x,350,j2w,150);
+			j3x = Math.floor(Math.random()*160+20)+j2x+j2w;
+			j3w = Math.floor(Math.random()*60+20);
+			ctx.fillRect(j3x,350,j3w,150);//以上三个初始化矩形
+			ctx.fillStyle = "aliceblue";
+			ctx.fillRect(playx,playy,20,20);//画出游戏人物
+			huafenshu();
+		}
+		function huafenshu() {
+			ctx.fillStyle = "azure";
+			ctx.font = "40px 宋体";
+			ctx.fillText(fenshu,140,40)
+		}
+		function dokeydown(e) {
+			var keyid = e.keyCode;
+			if (keyid == 32) {
+				ctx.strokeStyle = "sienna";
+				ctx.lineWidth = 3;
+				ctx.moveTo(playx+20,playy+20);
+				ctx.lineTo(gunzix,gunziy);
+				ctx.stroke();
+				gunziy -=5;
+				gunzic = 350-gunziy;
+			} else if (keyid == 13) {
+				start();
+			}else{
+				alert("请按要求操作")
+			}
+		}
+		function dokeyup (e) {
+			var keyid = e.keyCode;
+			if (keyid == 32) {
+				gunziy = 350;
+				ctx.beginPath();
+				ctx.lineWidth = 4;
+				ctx.strokeStyle = "sienna";
+				ctx.moveTo(playx+20,playy+20);
+				ctx.lineTo(playx+20+gunzic,gunziy);
+				ctx.stroke();
+				ctx.beginPath();
+				ctx.lineWidth = 4;
+				ctx.strokeStyle = "#ABCDEF";
+				ctx.moveTo(playx+20,playy+20-2);
+				ctx.lineTo(playx+20,350-gunzic);
+				ctx.stroke();
+				moveplay();
+			}
+		}
+		function moveplay() {
+			ctx.beginPath();
+			ctx.fillStyle = "#ABCDEF";
+			ctx.fillRect(playx,playy,20,20);
+			ctx.beginPath();
+			ctx.fillStyle = "aliceblue";
+			playx = playx+5;
+			ctx.fillRect(playx,playy,20,20);
+			if (playx<=(gunzic+j1w-20)) {
+				setTimeout(moveplay,30)
+			} else{
+				if ((gunzic+j1w)>j2x&&((j1w+gunzic)<(j2x+j2w))) {
+					ctx.beginPath();
+					ctx.fillStyle = "#ABCDEF";
+					ctx.fillRect(playx,playy,20,20);
+					ctx.beginPath();
+					ctx.fillStyle = "aliceblue";
+					playx = j2w+j2x-20;
+					ctx.fillRect(playx,playy,20,20);
+					fenshu++;
+					moveall();
+				} else{
+					gameover();
+				}
+			}
+		}
+		function moveall() {
+			ctx.fillStyle = "#ABCDEF";
+			ctx.fillRect(0,0,300,500);
+			ctx.fillStyle = "black";
+			j1x--;
+			j2x--;
+			j3x--;
+			playx--;
+			ctx.fillRect(j1x,350,j1w,150);
+			ctx.fillRect(j2x,350,j2w,150);
+			ctx.fillRect(j3x,350,j3w,150);
+			ctx.fillStyle="aliceblue";
+			ctx.fillRect(playx,playy,20,20);
+			huafenshu();
+			if (j2x!=0) {
+				setTimeout(moveall,1)
+			}else{
+				change();
+			}
+		}
+		function change() {
+			j1x = j2x;
+			j1w = j2w;
+			j2x = j3x;
+			j2w = j3w;
+			j3x = Math.floor(Math.random()*160+20)+j2x+j2w;
+			j3w = Math.floor(Math.random()*60+20);
+			gunzix = j1w;
+			
+		}
+		function gameover() {
+			ctx.fillStyle = "#ABCDEF";
+			ctx.fillRect(0,0,300,500);
+			ctx.fillStyle = "#fff";
+			ctx.font = "40px 宋体";
+			ctx.fillText("得分"+fenshu,60,200);
+			ctx.fillStyle = "red";
+			ctx.font = "40px 宋体";
+			ctx.fillText("GAME OVER",60,150);
+			ctx.fillStyle = "red";
+			ctx.font = "30px 宋体";
+			ctx.fillText("Enter to play",60,250);
+		}
+	</script>
+</html>
