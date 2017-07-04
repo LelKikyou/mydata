@@ -4,6 +4,7 @@ import Home from '@/components/common/Home'
 import List from '@/components/common/List'
 import Buys from '@/components/common/Buys'
 import Mymy from '@/components/common/Mymy'
+import Search from '@/components/page/Search'
 
 Vue.use(Router)
 
@@ -24,6 +25,10 @@ export default new Router({
     {
       path: '/Mymy',
       component: Mymy
+    },
+    {
+      path: '/search',
+      component: Search
     }
   ]
 })

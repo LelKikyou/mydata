@@ -2,20 +2,20 @@
   <div id="app">
     <router-view></router-view>
     <div class="list">
-      <router-link to="/">
-        <img :src="[isChoice?homeImg:homeImg1]">
+      <router-link to="/" :class="{listColor:isHome}">
+        <img :src="[isHome?homeImg:homeImg1]" @click="numCli(1)">
         <p>首页</p>
       </router-link>
-      <router-link to="/List">
-        <img src="./assets/list.png" alt="">
+      <router-link to="/List" :class="{listColor:isList}">
+        <img :src="[isList?listImg:listImg1]" alt="" @click="numCli(2)">
         <p>分类</p>
       </router-link>
-      <router-link to="/Buys">
-        <img src="./assets/buy.png" alt="">
+      <router-link to="/Buys" :class="{listColor:isBuy}">
+        <img :src="[isBuy?buyImg:buyImg1]" alt="" @click="numCli(3)">
         <p>购物车</p>
       </router-link>
-      <router-link to="/Mymy">
-        <img src="./assets/mymy.png" alt="">
+      <router-link to="/Mymy" :class="{listColor:isMymy}">
+        <img :src="[isMymy?mymyImg:mymyImg1]" alt="" @click="numCli(4)">
         <p>个人中心</p>
       </router-link>
     </div>
@@ -36,19 +36,51 @@
       return {
         homeImg: homeImg,
         homeImg1: homeImg1,
-        listImg:list,
-        listImg1:list1,
-        buyImg:buy,
-        buyImg1:buy1,
-        mymyImg:mymy,
-        mymyImg1:mymy1,
-        isChoice: true
+        listImg: list,
+        listImg1: list1,
+        buyImg: buy,
+        buyImg1: buy1,
+        mymyImg: mymy,
+        mymyImg1: mymy1,
+        isHome: true,
+        isList: false,
+        isBuy: false,
+        isMymy: false,
+        listColor: 'listColor'
       }
     },
     mounted: function () {
       this.getRem(document, window)
     },
     methods: {
+      numCli(num){
+        switch (num) {
+          case 1 :
+            this.isHome = true;
+            this.isList = false;
+            this.isBuy = false;
+            this.isMymy = false;
+            break;
+          case 2:
+            this.isHome = false;
+            this.isList = true;
+            this.isBuy = false;
+            this.isMymy = false;
+            break;
+          case 3:
+            this.isHome = false;
+            this.isList = false;
+            this.isBuy = true;
+            this.isMymy = false;
+            break;
+          case 4:
+            this.isHome = false;
+            this.isList = false;
+            this.isBuy = false;
+            this.isMymy = true;
+            break;
+        }
+      },
       getRem (doc, win, undefined) {
         let docEl = doc.documentElement,
           resizeEvt = 'orientationchange' in win ? 'orientationchange' : 'resize',
@@ -69,6 +101,15 @@
   #app {
     font-family: "Microsoft YaHei UI";
     text-align: center;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  #app ul {
+    list-style: none;
   }
 
   .list {
@@ -97,5 +138,14 @@
     margin: 0 auto;
     display: block;
     width: .9em;
+  }
+
+  .listColor {
+    background-color: white;
+    opacity: 0.8;
+  }
+
+  .listColor p {
+    color: black !important;
   }
 </style>
