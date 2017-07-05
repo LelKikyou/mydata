@@ -10,10 +10,18 @@
     <div class="lunbo">
       <div class="swiper-container">
         <div class="swiper-wrapper">
-          <div class="swiper-slide">Slide 1</div>
-          <div class="swiper-slide">Slide 2</div>
-          <div class="swiper-slide">Slide 3</div>
-          <div class="swiper-slide">Slide 4</div>
+          <div class="swiper-slide">
+            <img :src="carousel[0]" alt="">
+          </div>
+          <div class="swiper-slide">
+            <img :src="carousel[1]" alt="">
+          </div>
+          <div class="swiper-slide">
+            <img :src="carousel[2]" alt="">
+          </div>
+          <div class="swiper-slide">
+            <img :src="carousel[3]" alt="">
+          </div>
         </div>
         <!-- Add Pagination -->
         <div class="swiper-pagination"></div>
@@ -23,11 +31,12 @@
 </template>
 <script>
   import Swiper from '../../assets/swiper/js/swiper'
-  import axios from 'axios'
+  import jquery from 'jquery'
   export default {
     data () {
       return {
-        val: ''
+        val: '',
+        carousel: []
       }
     },
     mounted: function () {
@@ -39,11 +48,11 @@
       });
     },
     created: function () {
-      axios.get('http://datainfo.duapp.com/shopdata/getBanner.php').then(function (res) {
-        console.log(res)
-      }).catch(function (error) {
-        console.log(error)
-      })
+      jquery.get('http://datainfo.duapp.com/shopdata/getBanner.php', data => {
+        for (let i = 0; i < data.length; i++) {
+          this.carousel.push(JSON.parse(data[i].goodsBenUrl)[0])
+        }
+      }, 'jsonp')
     }
   }
 </script>
@@ -115,5 +124,11 @@
     -ms-flex-align: center;
     -webkit-align-items: center;
     align-items: center;
+  }
+
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
   }
 </style>

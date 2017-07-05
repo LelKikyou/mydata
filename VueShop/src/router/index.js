@@ -5,6 +5,8 @@ import List from '@/components/common/List'
 import Buys from '@/components/common/Buys'
 import Mymy from '@/components/common/Mymy'
 import Search from '@/components/page/Search'
+import Login from '@/components/page/login'
+import Register from '@/components/page/Register'
 
 Vue.use(Router)
 
@@ -29,6 +31,14 @@ export default new Router({
     {
       path: '/search',
       component: Search
+    },
+    {
+      path:'/login',
+      component:Login
+    },
+    {
+      path:'/register',
+      component:Register
     }
   ]
 })

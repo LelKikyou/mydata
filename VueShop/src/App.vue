@@ -2,20 +2,20 @@
   <div id="app">
     <router-view></router-view>
     <div class="list">
-      <router-link to="/" :class="{listColor:isHome}">
-        <img :src="[isHome?homeImg:homeImg1]" @click="numCli(1)">
+      <router-link to="/" :class="{listColor:isHome}" @click.native="numCli(1)">
+        <img :src="[isHome?homeImg:homeImg1]">
         <p>首页</p>
       </router-link>
-      <router-link to="/List" :class="{listColor:isList}">
-        <img :src="[isList?listImg:listImg1]" alt="" @click="numCli(2)">
+      <router-link to="/List" :class="{listColor:isList}" @click.native="numCli(2)">
+        <img :src="[isList?listImg:listImg1]" alt="">
         <p>分类</p>
       </router-link>
-      <router-link to="/Buys" :class="{listColor:isBuy}">
-        <img :src="[isBuy?buyImg:buyImg1]" alt="" @click="numCli(3)">
+      <router-link to="/Buys" :class="{listColor:isBuy}" @click.native="numCli(3)">
+        <img :src="[isBuy?buyImg:buyImg1]" alt="">
         <p>购物车</p>
       </router-link>
-      <router-link to="/Mymy" :class="{listColor:isMymy}">
-        <img :src="[isMymy?mymyImg:mymyImg1]" alt="" @click="numCli(4)">
+      <router-link to="/Mymy" :class="{listColor:isMymy}" @click.native="numCli(4)">
+        <img :src="[isMymy?mymyImg:mymyImg1]" alt="">
         <p>个人中心</p>
       </router-link>
     </div>
@@ -108,6 +108,10 @@
     padding: 0;
   }
 
+  a {
+    text-decoration: none;
+  }
+
   #app ul {
     list-style: none;
   }
@@ -126,7 +130,6 @@
     float: left;
     width: 25%;
     height: 1.5rem;
-    text-decoration: none;
   }
 
   .list a p {
