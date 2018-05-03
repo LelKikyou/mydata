@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <my-header></my-header>
+    <my-header :seller="seller"></my-header>
     <div class="tab">
       <div class="goods">
           <router-link to="/goods">商品</router-link>
@@ -24,6 +24,18 @@ export default {
   name: "App",
   components: {
     "my-header": header
+  },
+  data() {
+    return {
+      seller: {}
+    };
+  },
+  created() {
+    this.axios.get("/api/seller").then(response => {
+      this.seller = response.data.data;
+    });
+  },
+  mounted() {
   }
 };
 </script>
@@ -47,7 +59,7 @@ export default {
   line-height: 80px;
   text-align: center;
 }
-.tab>div>.router-link-active{
+.tab > div > .router-link-active {
   color: rgb(240, 20, 20) !important;
 }
 </style>
