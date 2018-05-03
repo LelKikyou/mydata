@@ -3,7 +3,7 @@
     <my-header :seller="seller"></my-header>
     <div class="tab">
       <div class="goods">
-          <router-link to="/goods">商品</router-link>
+          <router-link to="/goods">商品ssss</router-link>
       </div>
       <div class="ratings">
           <router-link to="/ratings">评论</router-link>
