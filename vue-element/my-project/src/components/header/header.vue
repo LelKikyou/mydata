@@ -21,14 +21,14 @@
           </span>
         </div>
       </div>
-      <div v-if="seller.supports" class="support-count">
+      <div v-if="seller.supports" class="support-count" @click="show">
         <span>{{seller.supports.length}}个</span>
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-gengduo"></use>
         </svg>
       </div>
     </div>
-    <div class="notice">
+    <div class="notice" @click="show">
       <div class="title-img"></div>
       <div class="text">
         {{seller.bulletin}}
@@ -39,22 +39,47 @@
         </svg>
       </div>
     </div>
+  <div class="background">
+    <img :src="seller.avatar" width="100%"  height="100%"/>
+  </div>
+  <my-detail :seller="seller" :detailShow="detailShow" @changeShow="show"></my-detail>
   </div>
 </template>
 <script>
+import detail from "./detail.vue"
 export default {
+  components: {
+    "my-detail": detail
+  },
   props: {
     seller: Object
   },
   data() {
-    return {};
+    return {
+      detailShow: false
+    };
   },
-  mounted() {}
+  methods: {
+    show: function() {
+      this.detailShow = !this.detailShow;
+    }
+  }
 };
 </script>
 <style scoped>
+.background {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  filter: blur(10px);
+}
 .header {
+  position: relative;
   background-color: rgba(7, 17, 27, 0.5);
+  overflow: hidden;
 }
 .shop-info {
   position: relative;
