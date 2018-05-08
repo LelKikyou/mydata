@@ -17,7 +17,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import header from "./components/header/header.vue";
 export default {

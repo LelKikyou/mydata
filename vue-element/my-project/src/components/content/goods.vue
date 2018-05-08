@@ -1,37 +1,42 @@
 <template>
   <div class="goods">
-      <div class="menu-wrapper">
-        <div v-for="data in goods" class="good">
-          <span class="good-data">{{data.name}}</span>
+      <div class="menu-wrapper" ref="menuWrapper">
+        <div>
+            <div v-for="data in goods" class="good">
+               <span class="good-data">{{data.name}}</span>
+            </div>
         </div>
       </div>
-      <div class="menu-goods">
-        <div class="goods-item" v-for="data in goods">
-          <div class="good-name">
-            {{data.name}}
-          </div>
-          <div class="good-content" v-for="foodData in data.foods">
-            <div class="good-img">
-              <img :src="foodData.icon">
+      <div class="menu-goods" ref="goodsWrapper">
+        <div>
+          <div class="goods-item food-list-hook" v-for="data in goods">
+            <div class="good-name">
+              {{data.name}}
             </div>
-            <div>
-              <p>
-                {{foodData.name}}
-              </p>
-              <p>
-                {{foodData.description}}
-              </p>
-              <div>
-                 <span>
-                   月销{{foodData.sellCount}}份
-                 </span>
-                   <span>
-                   好评率{{foodData.rating}}%
-                 </span>
+            <div class="good-content" v-for="foodData in data.foods">
+              <div class="good-img">
+                <img :src="foodData.icon">
               </div>
-              <p>
-                ¥{{foodData.price}}
+              <div class="good-details">
+                <p class="details-1">
+                  {{foodData.name}}
                 </p>
+                <p class="details-2">
+                  {{foodData.description}}
+                </p>
+                <div class="details-3">
+                    <span>
+                      月销{{foodData.sellCount}}份
+                    </span>
+                      <span>
+                      好评率{{foodData.rating}}%
+                    </span>
+                </div>
+                <div class="details-4">
+                  <span> ¥{{foodData.price}}</span>
+                  <span v-show="foodData.oldPrice"> ¥{{foodData.oldPrice}}</span>
+                  </div>
+              </div>
             </div>
           </div>
         </div>
@@ -39,10 +44,14 @@
   </div>
 </template>
 <script>
+import BScroll from "better-scroll";
+
 export default {
   data() {
     return {
-      goods: []
+      goods: [],
+      listHeight: [],
+      scrolly: 0
     };
   },
   props: {
@@ -51,7 +60,31 @@ export default {
   created() {
     this.axios.get("/api/goods").then(response => {
       this.goods = response.data.data;
+      this.$nextTick(() => {
+        this._initScroll();
+      });
+      this.$nextTick(() => {
+        this._calculateHeight();
+      });
     });
+  },
+  methods: {
+    _initScroll: function() {
+      this.meunScroll = new BScroll(this.$refs.menuWrapper, {});
+      this.goodsScroll = new BScroll(this.$refs.goodsWrapper, {});
+    },
+    _calculateHeight: function() {
+      let height = 0;
+      let foodList = this.$refs.goodsWrapper.getElementsByClassName(
+        "food-list-hook"
+      );
+      for (let i = 0; i < foodList.length; i++) {
+        let item = foodList[i];
+        height += item.clientHeight;
+        this.listHeight.push(height);
+      }
+      console.log(this.listHeight);
+    }
   }
 };
 </script>
@@ -77,6 +110,19 @@ export default {
   font-size: 24px;
   height: 108px;
 }
+.good::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 112px;
+  border-top: 2px solid rgba(7, 17, 27, 0.1);
+}
+.good:last-child::after {
+  display: none;
+}
 .good-data {
   position: absolute;
   padding: 0 24px;
@@ -85,5 +131,82 @@ export default {
   font-size: 24px;
   line-height: 28px;
   transform: translateY(-50%);
+}
+.good-name {
+  padding-left: 28px;
+  width: 100%;
+  height: 52px;
+  border-left: 2px solid #d9dde1;
+  font-size: 24px;
+  color: rgb(147, 153, 159);
+  line-height: 52px;
+  background-color: #f3f5f7;
+}
+.good-content {
+  display: flex;
+  margin: 36px 36px 0 36px;
+  overflow: hidden;
+  position: relative;
+}
+.good-content:after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  border-top: 2px solid rgba(7, 17, 27, 0.1);
+}
+.good-content:last-child::after {
+  display: none;
+}
+.good-img {
+  flex: 0 114px;
+}
+.good-img img {
+  width: 114px;
+  height: 114px;
+}
+.good-details {
+  flex: 1;
+  padding: 4px 0 36px 20px;
+}
+.details-1 {
+  font-size: 28px;
+  color: rgb(7, 17, 27);
+  line-height: 28px;
+}
+.details-2 {
+  padding-top: 16px;
+  font-size: 20px;
+  color: rgb(147, 153, 159);
+  line-height: 20px;
+}
+.details-3 {
+  padding-top: 16px;
+  font-size: 20px;
+  color: rgb(147, 153, 159);
+  line-height: 20px;
+}
+.details-3 span:nth-child(2) {
+  padding-left: 24px;
+}
+.details-4 {
+  font-size: 0;
+  padding-top: 16px;
+}
+.details-4 span:nth-child(1) {
+  font-size: 28px;
+  color: rgb(240, 20, 20);
+  font-weight: 700;
+  line-height: 48px;
+}
+.details-4 span:nth-child(2) {
+  padding-left: 16px;
+  font-size: 20px;
+  color: rgb(147, 153, 159);
+  font-weight: 700;
+  line-height: 48px;
+  text-decoration: line-through;
 }
 </style>
