@@ -1,8 +1,5 @@
 <template>
   <div class="header">
-<<<<<<< HEAD
-
-=======
     <div class="shop-info">
       <div class="avatar">
         <img :src="seller.avatar">
@@ -46,11 +43,10 @@
     <img :src="seller.avatar" width="100%"  height="100%"/>
   </div>
   <my-detail :seller="seller" :detailShow="detailShow" @changeShow="show"></my-detail>
->>>>>>> master
   </div>
 </template>
 <script>
-import detail from "./detail.vue"
+import detail from "./detail.vue";
 export default {
   components: {
     "my-detail": detail
@@ -71,11 +67,6 @@ export default {
 };
 </script>
 <style scoped>
-<<<<<<< HEAD
-.header{
-  width: 100%;
-  height: 80px;
-=======
 .background {
   width: 100%;
   height: 100%;
@@ -196,6 +187,5 @@ export default {
   font-size: 20px;
   color: rgb(255, 255, 255);
   font-weight: 200;
->>>>>>> master
 }
 </style>

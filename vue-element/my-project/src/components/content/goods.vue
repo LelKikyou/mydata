@@ -1,8 +1,4 @@
 <template>
-<<<<<<< HEAD
-  <div>
-      goodsq
-=======
   <div class="goods">
       <div class="menu-wrapper" ref="menuWrapper">
         <div>
@@ -30,7 +26,7 @@
                 </p>
                 <div class="details-3">
                     <span>
-                      月销{{seller.name}}份
+                      月销{{seller.sellCount}}份
                     </span>
                       <span>
                       好评率{{foodData.rating}}%
@@ -46,7 +42,6 @@
         </div>
       </div>
       <my-shopCart :seller="seller"></my-shopCart>
->>>>>>> master
   </div>
 </template>
 <script>

@@ -1,6 +1,6 @@
 <template>
   <div>
-      ratting
+      我是今天修改的
   </div>
 </template>
 <script>
