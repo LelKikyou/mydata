@@ -152,13 +152,6 @@ export default {
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 14px;
 }
-.icon {
-  width: 1em;
-  height: 1em;
-  vertical-align: -0.15em;
-  fill: currentColor;
-  overflow: hidden;
-}
 .notice {
   position: relative;
   background-color: rgba(7, 17, 27, 0.2);

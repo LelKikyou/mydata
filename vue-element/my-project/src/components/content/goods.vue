@@ -2,7 +2,7 @@
   <div class="goods">
       <div class="menu-wrapper" ref="menuWrapper">
         <div>
-            <div v-for="data in goods" class="good">
+            <div @click="selectMenu(index)" v-for="(data,index) in goods" class="good" :class="{active:currentIndex===index}">
                <span class="good-data">{{data.name}}</span>
             </div>
         </div>
@@ -26,7 +26,7 @@
                 </p>
                 <div class="details-3">
                     <span>
-                      月销{{foodData.sellCount}}份
+                      月销{{seller.name}}份
                     </span>
                       <span>
                       好评率{{foodData.rating}}%
@@ -41,12 +41,16 @@
           </div>
         </div>
       </div>
+      <my-shopCart :seller="seller"></my-shopCart>
   </div>
 </template>
 <script>
 import BScroll from "better-scroll";
-
+import shopCart from "../shopCart/shopCart.vue";
 export default {
+  components: {
+    "my-shopCart": shopCart
+  },
   data() {
     return {
       goods: [],
@@ -68,10 +72,32 @@ export default {
       });
     });
   },
+  computed: {
+    currentIndex() {
+      for (let i = 0; i < this.listHeight.length; i++) {
+        let height = this.listHeight[i];
+        let heightNext = this.listHeight[i + 1];
+        if (
+          heightNext &&
+          (this.scrolly >= height && this.scrolly < heightNext)
+        ) {
+          return i + 1;
+        }
+      }
+      return 0;
+    }
+  },
   methods: {
     _initScroll: function() {
-      this.meunScroll = new BScroll(this.$refs.menuWrapper, {});
-      this.goodsScroll = new BScroll(this.$refs.goodsWrapper, {});
+      this.meunScroll = new BScroll(this.$refs.menuWrapper, {
+        click: true
+      });
+      this.goodsScroll = new BScroll(this.$refs.goodsWrapper, {
+        probeType: 3
+      });
+      this.goodsScroll.on("scroll", pos => {
+        this.scrolly = Math.abs(Math.round(pos.y));
+      });
     },
     _calculateHeight: function() {
       let height = 0;
@@ -83,7 +109,13 @@ export default {
         height += item.clientHeight;
         this.listHeight.push(height);
       }
-      console.log(this.listHeight);
+    },
+    selectMenu: function(index) {
+      let foodList = this.$refs.goodsWrapper.getElementsByClassName(
+        "food-list-hook"
+      );
+      let el = foodList[index];
+      this.goodsScroll.scrollToElement(el, 300);
     }
   }
 };
@@ -93,7 +125,7 @@ export default {
   position: absolute;
   top: 342px;
   display: flex;
-  bottom: 128px;
+  bottom: 96px;
   width: 100%;
   overflow: hidden;
 }
@@ -109,6 +141,16 @@ export default {
   position: relative;
   font-size: 24px;
   height: 108px;
+  color: rgb(77, 85, 93);
+}
+.good.active {
+  margin-top: -2px;
+  background-color: #fff;
+  font-weight: 700;
+  color: #000;
+}
+.good.active::after {
+  display: none;
 }
 .good::after {
   content: "";
