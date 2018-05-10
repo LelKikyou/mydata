@@ -3,14 +3,14 @@
       <div class="shop">
           <div class="shop-single">
               <span>
-                  ¥{{price}}
+                  ¥{{totalPrice}}
               </span>
               <span>
                   另需配送费¥{{seller.deliveryPrice}}元
               </span>
           </div>
           <div class="shop-total">
-              ¥{{seller.minPrice}}起送
+              还差¥{{seller.minPrice}}起送
           </div>
       </div>
       <div class="cart">
@@ -25,12 +25,25 @@
 <script>
 export default {
   props: {
-    seller: Object
+    seller: Object,
+    selectFoods: Array
   },
   data() {
     return {
-      price: "0"
+     
     };
+  },
+  computed: {
+    totalPrice: function() {
+      let total = 0;
+      // this.selectFoods.forEach(food => {
+      //   total += food.price * food.count;
+      // });
+      return total;
+    },
+    toPrice:function(){
+      
+    }
   }
 };
 </script>
