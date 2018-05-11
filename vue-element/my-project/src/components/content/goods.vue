@@ -37,25 +37,36 @@
                   <span v-show="foodData.oldPrice"> ¥{{foodData.oldPrice}}</span>
                   </div>
               </div>
+              <div class="cartconcontrol">
+                <my-cartConcontrol :food="foodData" :foodData="foodData"></my-cartConcontrol>
+            </div>
             </div>
           </div>
         </div>
       </div>
-      <my-shopCart :seller="seller"></my-shopCart>
+      <my-shopCart :selectFoods="selectFoods" :seller="seller"></my-shopCart>
   </div>
 </template>
 <script>
 import BScroll from "better-scroll";
 import shopCart from "../shopCart/shopCart.vue";
+import CartConcontrol from "../cartconcontrol/cartconcontrol";
 export default {
   components: {
-    "my-shopCart": shopCart
+    "my-shopCart": shopCart,
+    "my-cartConcontrol": CartConcontrol
   },
   data() {
     return {
       goods: [],
       listHeight: [],
-      scrolly: 0
+      scrolly: 0,
+      selectFoods: [
+        {
+          price: 1,
+          count: 1
+        }
+      ]
     };
   },
   props: {
@@ -93,7 +104,8 @@ export default {
         click: true
       });
       this.goodsScroll = new BScroll(this.$refs.goodsWrapper, {
-        probeType: 3
+        probeType: 3,
+        click: true
       });
       this.goodsScroll.on("scroll", pos => {
         this.scrolly = Math.abs(Math.round(pos.y));
@@ -121,6 +133,12 @@ export default {
 };
 </script>
 <style scoped>
+.cartconcontrol {
+  position: absolute;
+  bottom: 24px;
+  right: 0;
+  width: 144px;
+}
 .goods {
   position: absolute;
   top: 342px;
