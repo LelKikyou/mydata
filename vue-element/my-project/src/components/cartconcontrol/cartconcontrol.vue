@@ -1,35 +1,40 @@
 <template>
   <div class="cartconcontrol">
-      <div class="cart-decrease" v-show="food.count>0">
+    <transition-group name="slide-left">
+      <div class="cart-decrease" :key="index" @click="minCart" v-show="food.count>0">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-jian"></use>
         </svg>
       </div>
-      <div class="cart-count" v-show="food.count>0">
+    </transition-group>
+   <transition-group name="slide">
+      <div class="cart-count" :key="index" v-show="food.count>0">
           {{food.count}}
       </div>
-      <div class="cart-add" @click="addCart">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-jia"></use>
-          </svg>
-      </div>
+    </transition-group>
+    <div class="cart-add" @click="addCart">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-jia"></use>
+        </svg>
+    </div>
   </div>
 </template>
 <script>
-import Vue from "vue";
 export default {
   props: {
-    food: Object
+    food: Object,
+    index: Number
   },
   data() {
     return {};
   },
   methods: {
     addCart: function() {
-      if (!this.food.count) {
-        Vue.set(this.food, "count", 1);
-      } else {
-        this.food.count++;
+      this.food.count++;
+    },
+    minCart: function() {
+      if (this.food.count > 0) {
+        this.food.count--;
       }
     }
   }
@@ -41,21 +46,41 @@ export default {
 }
 .cart-decrease {
   display: inline-block;
-  font-size: 48px;
+  padding: 5px;
+  font-size: 42px;
   color: rgb(0, 160, 220);
 }
 .cart-count {
   vertical-align: top;
   display: inline-block;
-  width: 48px;
+  width: 28px;
   text-align: center;
-  font-size: 20px;
-  line-height: 48px;
+  font-size: 22px;
+  line-height: 52px;
   color: rgb(147, 153, 159);
 }
 .cart-add {
   display: inline-block;
-  font-size: 48px;
+  padding: 5px;
+  font-size: 44px;
   color: rgb(0, 160, 220);
+}
+.slide-left-enter-active,
+.slide-left-leave-active {
+  transition: all 0.5s ease;
+}
+.slide-left-enter,
+.slide-left-leave-to {
+  opacity: 0;
+  transform: translateX(98px) rotate(180deg);
+}
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.5s ease;
+}
+.slide-enter,
+.slide-leave-to {
+  opacity: 0;
+  transform: translateX(48px);
 }
 </style>

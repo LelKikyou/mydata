@@ -13,7 +13,7 @@
             <div class="good-name">
               {{data.name}}
             </div>
-            <div class="good-content" v-for="foodData in data.foods">
+            <div class="good-content" v-for="(foodData,index) in data.foods">
               <div class="good-img">
                 <img :src="foodData.icon">
               </div>
@@ -37,14 +37,14 @@
                   <span v-show="foodData.oldPrice"> ¥{{foodData.oldPrice}}</span>
                   </div>
               </div>
-              <div class="cartconcontrol">
-                <my-cartConcontrol :food="foodData" :foodData="foodData"></my-cartConcontrol>
-            </div>
+              <div class="cartconcontrol-food">
+                <my-cartConcontrol :index="index" :food="foodData"></my-cartConcontrol>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <my-shopCart :selectFoods="selectFoods" :seller="seller"></my-shopCart>
+      <my-shopCart :selectFoods="selectFood" :seller="seller"></my-shopCart>
   </div>
 </template>
 <script>
@@ -60,13 +60,7 @@ export default {
     return {
       goods: [],
       listHeight: [],
-      scrolly: 0,
-      selectFoods: [
-        {
-          price: 1,
-          count: 1
-        }
-      ]
+      scrolly: 0
     };
   },
   props: {
@@ -96,6 +90,17 @@ export default {
         }
       }
       return 0;
+    },
+    selectFood() {
+      let selfoods = [];
+      if (this.goods.length > 0) {
+        this.goods.forEach(good => {
+          good["foods"].forEach(item => {
+            selfoods.push(item);
+          });
+        });
+      }
+      return selfoods;
     }
   },
   methods: {
@@ -133,11 +138,10 @@ export default {
 };
 </script>
 <style scoped>
-.cartconcontrol {
+.cartconcontrol-food {
   position: absolute;
   bottom: 24px;
   right: 0;
-  width: 144px;
 }
 .goods {
   position: absolute;

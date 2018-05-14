@@ -9,7 +9,7 @@
                   另需配送费¥{{seller.deliveryPrice}}元
               </span>
           </div>
-          <div class="shop-total" :class="{toPay:this.seller.minPrice-totalPrice<0}">
+          <div class="shop-total" :class="{toPay:this.seller.minPrice-totalPrice<=0}">
               {{this.seller.minPrice-totalPrice>0?"还差¥"+(this.seller.minPrice-totalPrice)+"起送":"去结算"}}
           </div>
       </div>
@@ -26,6 +26,7 @@
   </div>
 </template>
 <script>
+import Vue from "vue";
 export default {
   props: {
     seller: Object,
@@ -38,17 +39,19 @@ export default {
     totalPrice: function() {
       let total = 0;
       this.selectFoods.forEach(food => {
-        total += food.price * food.count;
+        if (!food.count) {
+          Vue.set(food, "count", 0);
+        }
+        total += food.price*food.count;
       });
       return total;
     },
-    toPrice: function() {},
     toCount: function() {
       let count = 0;
       this.selectFoods.forEach(food => {
         count += food.count;
       });
-      count>99?count=99:count;
+      count > 99 ? (count = 99) : count;
       return count;
     }
   }
@@ -69,7 +72,7 @@ export default {
   background-color: rgb(240, 20, 20);
   border-radius: 12px;
 }
-.shop-single span:nth-child(1).payPrice{
+.shop-single span:nth-child(1).payPrice {
   color: #fff;
 }
 .shopCart {
@@ -126,7 +129,7 @@ export default {
   text-align: center;
   background-color: #2b333b;
 }
-.toPay.shop-total{
+.toPay.shop-total {
   background-color: #00b43c;
   color: #fff;
 }
@@ -142,7 +145,7 @@ export default {
 .cart > div:nth-child(1).payShop {
   background-color: #00a0dc;
 }
-.payShop>svg{
+.payShop > svg {
   color: #fff;
 }
 .cart > div:nth-child(1) {
