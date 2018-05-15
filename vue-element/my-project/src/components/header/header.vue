@@ -103,7 +103,7 @@ export default {
   display: inline-block;
   width: 60px;
   height: 36px;
-  background: url("/static/head-img/brand@2x.png") no-repeat;
+  background: url("./static/head-img/brand@2x.png") no-repeat;
   background-size: 60px 36px;
   vertical-align: top;
 }
@@ -129,7 +129,7 @@ export default {
   display: inline-block;
   width: 32px;
   height: 32px;
-  background: url("/static/head-img/decrease_2@2x.png") no-repeat;
+  background: url("./static/head-img/decrease_2@2x.png") no-repeat;
   background-size: 32px 32px;
   vertical-align: top;
 }
@@ -165,7 +165,7 @@ export default {
   left: 24px;
   transform: translateY(-50%);
   vertical-align: middle;
-  background: url("/static/head-img/bulletin@2x.png") no-repeat;
+  background: url("./static/head-img/bulletin@2x.png") no-repeat;
   background-size: 44px 24px;
   width: 44px;
   height: 24px;

@@ -30,7 +30,7 @@ export default {
     };
   },
   created() {
-    this.axios.get("/api/seller").then(response => {
+    this.axios.get("http://192.168.0.148:8080/api/seller").then(response => {
       this.seller = response.data.data;
     });
   },
