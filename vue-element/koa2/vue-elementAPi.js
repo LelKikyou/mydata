@@ -7,23 +7,24 @@ const app = new Koa();
 let router = new Router();
 let api = new Router();
 //core 跨域
-const cors=require("koa2-cors")
+const cors = require("koa2-cors");
+const JsonData = require("./data.json");
 app.use(cors({
-    origin: function(ctx) {
-      return '*';
+    origin: function (ctx) {
+        return '*';
     },
     exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
     maxAge: 5,
     credentials: true,
     allowMethods: ['GET', 'POST', 'DELETE'],
     allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
-  }));
+}));
 api
     .get("/seller", async (ctx) => {
-        ctx.body = "hqy1";
+        ctx.body = JsonData.seller;
     })
     .get("/goods", async (ctx) => {
-        ctx.body = "hqy2";
+        ctx.body = JsonData.goods;
     });
 router
     .use("/api", api.routes(), api.allowedMethods())

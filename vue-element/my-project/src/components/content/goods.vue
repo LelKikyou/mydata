@@ -67,8 +67,8 @@ export default {
     seller: Object
   },
   created() {
-    this.axios.get("http://192.168.0.148:8080/api/goods").then(response => {
-      this.goods = response.data.data;
+    this.axios.get("http://192.168.0.148:3000/api/goods").then(response => {
+      this.goods = response.data;
       this.$nextTick(() => {
         this._initScroll();
       });
