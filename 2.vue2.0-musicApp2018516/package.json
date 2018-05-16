@@ -1,0 +1,14 @@
+{
+  "name": "vue-music",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "vue":"vue init webpack my-project"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vue-cli": "^2.9.3"
+  }
+}
