@@ -7,6 +7,9 @@ import fastClick from "fastclick"
 Vue.config.productionTip = false
 fastClick.attach(document.body);
 /* eslint-disable no-new */
+import axios from "axios"
+import vueAxios from "vue-axios"
+Vue.use(vueAxios,axios);
 new Vue({
   el: '#app',
   router,
