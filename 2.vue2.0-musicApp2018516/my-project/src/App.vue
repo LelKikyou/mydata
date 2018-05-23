@@ -24,7 +24,9 @@
       </router-link>
   </div>
   <div>
-    <router-view></router-view>
+    <keep-alive>  
+      <router-view></router-view>  
+    </keep-alive>
   </div>
   </div>
 </template>
@@ -53,7 +55,7 @@ export default {
   text-align: center;
   font-weight: 700;
 }
-.router-link-active.tab-item span{
+.router-link-active.tab-item span {
   color: #ffcd32;
   display: inline-block;
   position: relative;

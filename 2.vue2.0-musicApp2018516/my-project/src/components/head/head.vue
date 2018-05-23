@@ -11,6 +11,14 @@ export default {
   data () {
     return {
     };
+  },
+  methods:{
+    _setSliderWidth(){
+      
+    },
+    _initSlider(){
+
+    }
   }
 }
 </script>
