@@ -23,7 +23,7 @@
         </span>
       </router-link>
   </div>
-  <div>
+  <div class="content">
     <keep-alive>  
       <router-view></router-view>  
     </keep-alive>
@@ -68,5 +68,12 @@ export default {
   position: absolute;
   left: 0;
   bottom: 10px;
+}
+.content{
+  position: absolute;
+  top:142px;
+  bottom: 0;
+  width: 100%;
+  overflow: hidden;
 }
 </style>

@@ -9,7 +9,14 @@ fastClick.attach(document.body);
 /* eslint-disable no-new */
 import axios from "axios"
 import vueAxios from "vue-axios"
+import VueLazyload from 'vue-lazyload'
 Vue.use(vueAxios, axios);
+Vue.use(VueLazyload, {
+  preLoad: 1.3,
+  error: 'dist/error.png',
+  loading: '../static/img/loading.gif',
+  attempt: 1
+})
 new Vue({
   el: '#app',
   router,

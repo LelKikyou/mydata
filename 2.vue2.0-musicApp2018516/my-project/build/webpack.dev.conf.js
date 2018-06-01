@@ -12,7 +12,11 @@ const portfinder = require('portfinder')
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
-
+const express=require("express");
+const app=express();
+var apiRoutes = express.Router()
+app.use('/api', apiRoutes)
+const axios=require("axios");
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
@@ -42,6 +46,19 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     quiet: true, // necessary for FriendlyErrorsPlugin
     watchOptions: {
       poll: config.dev.poll,
+    },
+    before(app) {
+      let url="https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg";
+      app.get('/api/musicLis', (req, res) => {
+        axios.get(url,{
+          headers:{
+            referer:"http://y.qq.com",
+          },
+          params:req.query
+        }).then(data=>{
+          res.json(data.data)
+        })
+      })
     }
   },
   plugins: [
