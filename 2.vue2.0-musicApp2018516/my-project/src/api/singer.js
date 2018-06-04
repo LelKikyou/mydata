@@ -1,18 +1,20 @@
 import jsonp from "../common/js/jsonp.js"
-export function getSinger(data) {
-    const url = "https://u.y.qq.com/cgi-bin/musicu.fcg";
+export function getSinger() {
+    const url = "https://c.y.qq.com/v8/fcg-bin/v8.fcg";
     return jsonp(url, {
-        g_tk: "5381",
-        loginUin: 0,
-        hostUin: 0,
-        format: "jsonp",
-        inCharset: "utf8",
+        g_tk: 1928093487,
+        inCharset: "utf-8",
         outCharset: "utf-8",
         notice: 0,
-        callback: "__jp0",
-        platform: "yqq",
+        format: "jsonp",
+        channel: "singer",
+        page: "list",
+        key: "all_all_all",
+        pagesize: 100,
+        pagenum: 1,
+        hostUin: 0,
         needNewCode: 0,
-        data: data
+        platform: "yqq",
     }, {
             param: 'jsonpCallback'
         })
