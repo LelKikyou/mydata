@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import routes from './routers'
 import iView from 'iview'
 import vueCookie from "vue-cookie"
-
 Vue.use(vueCookie);
 Vue.use(Router);
 const router = new Router({
@@ -11,18 +10,18 @@ const router = new Router({
     mode: 'history'
 });
 const LOGIN_NAME = 'login';
-let token = Vue.cookie.get('sdcmToken');
 router.beforeEach((to, from, next) => {
+    let token = Vue.cookie.get('sdcmToken');
     iView.LoadingBar.start();
     if (!token && to.name !== LOGIN_NAME) {
         next({
-            name: 'login'
+            path: '/login'
         })
     } else if (!token && to.name === LOGIN_NAME) {
         next()
     } else if (token && to.name === LOGIN_NAME) {
         next({
-            name: "home"
+            path: "/home"
         })
     } else {
         next()
