@@ -5,7 +5,7 @@ import seller from "../components/content/seller"
 import ratings from "../components/content/ratings"
 Vue.use(Router)
 export default new Router({
-  // mode: 'history',  
+  mode: 'history',  
   routes: [
     { path: '/', redirect: '/goods' },
     { path: "/goods", component: goods },

@@ -7,18 +7,18 @@ const app = new Koa();
 let router = new Router();
 let api = new Router();
 //core 跨域
-// const cors = require("koa2-cors");
+const cors = require("koa2-cors");
 const JsonData = require("./data.json");
-// app.use(cors({
-//     origin: function (ctx) {
-//         return '*';
-//     },
-//     exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
-//     maxAge: 5,
-//     credentials: true,
-//     allowMethods: ['GET', 'POST', 'DELETE'],
-//     allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
-// }));
+app.use(cors({
+    origin: function (ctx) {
+        return '*';
+    },
+    exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
+    maxAge: 5,
+    credentials: true,
+    allowMethods: ['GET', 'POST', 'DELETE'],
+    allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
+}));
 api
     .get("/seller", async (ctx) => {
         ctx.body = JsonData.seller;
