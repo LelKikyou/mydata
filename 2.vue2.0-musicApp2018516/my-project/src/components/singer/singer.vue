@@ -1,16 +1,19 @@
 <template>
   <div class="singer">
-    singer
+    <listView :data="singers"></listView>
   </div>
 </template>
 <script>
   import {getSinger} from "@/api/singer.js";
-
+  import listView from "@/base/listView/listView"
   export default {
     data() {
       return {
         singers: []
       };
+    },
+    components:{
+      listView
     },
     created() {
       this.getSinger();
@@ -54,8 +57,24 @@
             );
           }
         });
-        console.log(map)
-
+        let singers = [];
+        for (let i in map) {
+          if (i.match(/[a-z,A-Z]/)) {
+            singers.push({
+              title: i,
+              data: map[i]
+            })
+          }
+        }
+        singers.sort((a, b) => {
+          return a.title.charCodeAt(0)-b.title.charCodeAt(0)
+        });
+        singers.unshift({
+          title:"热门",
+          data:hot
+        });
+        this.singers=singers;
+        console.log(this.singers);
       }
     }
   };
