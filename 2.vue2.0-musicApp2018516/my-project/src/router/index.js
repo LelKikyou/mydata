@@ -25,7 +25,14 @@ export default new Router({
     },
     {
       path: "/singer",
-      component: Singer
+      component: Singer,
+      children:[
+        {
+          name:"xx",
+          path: ":id",
+          component: ()=>import("../components/singer/singerDetails/singerDetails.vue")
+        },
+      ]
     }
   ]
 })

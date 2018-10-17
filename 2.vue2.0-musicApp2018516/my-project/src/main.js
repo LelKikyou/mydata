@@ -11,6 +11,7 @@ import axios from "axios"
 import vueAxios from "vue-axios"
 import VueLazyload from 'vue-lazyload'
 Vue.use(vueAxios, axios);
+Vue.prototype.ss="xx"
 Vue.use(VueLazyload, {
   preLoad: 1.3,
   error: 'dist/error.png',

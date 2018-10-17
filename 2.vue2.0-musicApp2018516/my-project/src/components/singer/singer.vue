@@ -1,6 +1,7 @@
 <template>
   <div class="singer">
-    <listView :data="singers"></listView>
+    <listView @select="pathSinger" :data="singers"></listView>
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -76,6 +77,11 @@
         });
         console.log(singers)
         this.singers = singers;
+      },
+      pathSinger(singer){
+        this.$router.push({
+          path:`/singer/${singer.id}`
+        });
       }
     }
   };

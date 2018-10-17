@@ -1,10 +1,10 @@
 <template>
   <scroll class="listView" :data="data">
-    <ul class="list" ref="transformTop">
+    <ul class="list">
       <li v-for="group in data">
         <h2 class="title">{{group.title}}</h2>
         <ul>
-          <li class="singer" v-for="singer in group.data">
+          <li class="singer" @click="selectItem(singer)" v-for="singer in group.data">
             <img class="singer-img" v-lazy="singer.img">
             <span class="singer-name">{{singer.name}}</span>
           </li>
@@ -50,24 +50,14 @@
         return this.data.map((i, v) => {
           return i.title.substr(0, 1)
         })
-      },
-      xx(){
-        this.$nextTick(()=>{
-          this.scorll.on('scroll', (pos) => {
-            console.log(pos.x + '~' + posx.y)
-            return posx.y
-          })
-        })
       }
     },
     methods: {
       onTouchstart(index) {
         this.active = index;
-      }
-    },
-    watch:{
-      xx(x,y){
-        console.log(x,y)
+      },
+      selectItem(singer){
+        this.$emit("select",singer)
       }
     }
   }
@@ -79,7 +69,7 @@
     width: 100%;
     top: 0;
     left: 0;
-    color: red;
+    color: #ffcd32;
   }
 
   .listView {
