@@ -1,16 +1,15 @@
 <template>
-  <div>
-      search
+  <div class="search">
+    search
   </div>
 </template>
 <script>
-export default {
-  data () {
-    return {
-    };
+  export default {
+    data() {
+      return {};
+    }
   }
-}
 </script>
-<style scoped>
-
+<style lang="stylus" scoped>
+  @import "search.stylus"
 </style>

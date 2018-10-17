@@ -6,13 +6,14 @@
 <script>
   import {getSinger} from "@/api/singer.js";
   import listView from "@/base/listView/listView"
+
   export default {
     data() {
       return {
         singers: []
       };
     },
-    components:{
+    components: {
       listView
     },
     created() {
@@ -67,14 +68,14 @@
           }
         }
         singers.sort((a, b) => {
-          return a.title.charCodeAt(0)-b.title.charCodeAt(0)
+          return a.title.charCodeAt(0) - b.title.charCodeAt(0)
         });
         singers.unshift({
-          title:"热门",
-          data:hot
+          title: "热门",
+          data: hot
         });
-        this.singers=singers;
-        console.log(this.singers);
+        console.log(singers)
+        this.singers = singers;
       }
     }
   };
