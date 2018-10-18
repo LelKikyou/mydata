@@ -16,7 +16,7 @@
         {{item}}
       </li>
     </ul>
-    <h2 class="title list-fixed">{{fixTit}}</h2>
+    <h2 v-show="data.length" class="title list-fixed">{{fixTit}}</h2>
     <loading v-show="!data.length" class="loading"></loading>
   </scroll>
 </template>

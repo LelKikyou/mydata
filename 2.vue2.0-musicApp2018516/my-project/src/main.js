@@ -4,23 +4,24 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import fastClick from "fastclick"
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 fastClick.attach(document.body);
 /* eslint-disable no-new */
 import axios from "axios"
 import vueAxios from "vue-axios"
 import VueLazyload from 'vue-lazyload'
+import store from "./store/index"
 Vue.use(vueAxios, axios);
-Vue.prototype.ss="xx"
 Vue.use(VueLazyload, {
   preLoad: 1.3,
   error: 'dist/error.png',
   loading: '../static/img/loading.gif',
   attempt: 1
-})
+});
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
-})
+});

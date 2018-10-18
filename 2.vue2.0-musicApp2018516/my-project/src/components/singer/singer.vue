@@ -7,6 +7,7 @@
 <script>
   import {getSinger} from "@/api/singer.js";
   import listView from "@/base/listView/listView"
+  import {mapMutations} from "vuex"
 
   export default {
     data() {
@@ -21,6 +22,9 @@
       this.getSinger();
     },
     methods: {
+      ...mapMutations({
+        setSinger:"setSinger"
+      }),
       getSinger() {
         getSinger().then(data => {
           this._NormalLizeSingers(data.data.list);
@@ -45,7 +49,7 @@
           map[element.Findex].push(
             new singer(
               element.Fsinger_name,
-              element.Fsinger_id,
+              element.Fsinger_mid,
               element.Fsinger_mid
             )
           );
@@ -53,7 +57,7 @@
             hot.push(
               new singer(
                 element.Fsinger_name,
-                element.Fsinger_id,
+                element.Fsinger_mid,
                 element.Fsinger_mid
               )
             );
@@ -75,13 +79,13 @@
           title: "热门",
           data: hot
         });
-        console.log(singers)
         this.singers = singers;
       },
-      pathSinger(singer){
+      pathSinger(singer) {
         this.$router.push({
-          path:`/singer/${singer.id}`
+          path: `/singer/${singer.id}`
         });
+        this.setSinger(singer)
       }
     }
   };
