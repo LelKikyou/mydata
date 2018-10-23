@@ -4,7 +4,7 @@
       <li v-for="group in data">
         <h2 class="title">{{group.title}}</h2>
         <ul>
-          <li class="singer" @click="selectItem(singer)" v-for="singer in group.data">
+          <li class="singer" @click.stop="selectItem(singer)" v-for="singer in group.data">
             <img class="singer-img" v-lazy="singer.img">
             <span class="singer-name">{{singer.name}}</span>
           </li>
@@ -12,7 +12,7 @@
       </li>
     </ul>
     <ul class="nav" v-show="data.length">
-      <li v-for="(item,index) in navList" @touchstart.stop="onTouchstart(index)" :class="{active:active===index}">
+      <li v-for="(item,index) in navList" @click.stop="onTouchstart(index)" :class="{active:active===index}">
         {{item}}
       </li>
     </ul>
