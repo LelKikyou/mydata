@@ -1,7 +1,7 @@
 <template>
   <div class="musicList">
     <div class="imgLayer" v-show="showImg" :style="bgimg_url"></div>
-    <div class="back" @click="backUrl">
+    <div class="back" @touchstart.stop="backUrl">
       <i class="iconfont icon-fanhui"></i>
     </div>
     <h1 class="title">{{title}}</h1>
