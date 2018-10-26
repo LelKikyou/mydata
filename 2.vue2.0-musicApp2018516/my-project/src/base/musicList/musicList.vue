@@ -6,6 +6,10 @@
     </div>
     <h1 class="title">{{title}}</h1>
     <div class="singerInfo" :style="singerInfoC">
+      <div class="play-box" v-show="songs.length">
+        <i class="iconfont icon-bofang"></i>
+        <span>随机播放全部</span>
+      </div>
     </div>
     <div class="songsList">
       <div class="backgroundLayer" :style="topVal"></div>

@@ -21,7 +21,7 @@
         {{item}}
       </li>
     </ul>
-    <h2 v-show="data.length" class="title list-fixed">{{fixTit}}</h2>
+    <h2 v-show="data.length&&h2Show" class="title list-fixed" :style="_calH2">{{fixTit}}</h2>
     <loading v-show="!data.length" class="loading"></loading>
   </scroll>
 </template>
@@ -37,15 +37,19 @@
     },
     data() {
       return {
-        active: 0
+        active: 0,
+        h2Show: true,
+        dif: 0,
+        item1Y: 0,
+        item1YH: 0,
+        _calListHeight: []
       }
     },
     components:
       {
         Scroll,
         Loading
-      }
-    ,
+      },
     computed: {
       fixTit() {
         let data = this.data[this.active];
@@ -55,6 +59,9 @@
         return this.data.map((i, v) => {
           return i.title.substr(0, 1)
         })
+      },
+      _calH2() {
+        return `transform: translateY(${this.dif}px);`
       }
     },
     methods: {
@@ -66,20 +73,21 @@
         this.$emit("select", singer)
       },
       scroll(pos) {
-        let calListHeight = this._calListHeight();
-        let judgeNav = this._judgeNav(calListHeight, pos.y);
-        this.active = judgeNav;
-      },
-      _calListHeight() {
-        let groups = this.$refs.groups;
-        let listHeight = [];
-        let item1Y;
-        groups.forEach((item, index) => {
-          let itemY = item.getBoundingClientRect().y;
-          if (index === 0) item1Y = itemY;
-          listHeight.push(itemY - item1Y)
-        });
-        return listHeight;
+        let calListHeight = this._calListHeight;
+        if (pos.y >= 0) {
+          this.h2Show = false;
+          this.$refs.groups[0].classList.add("actCol");
+        } else {
+          this.h2Show = true;
+          this.$refs.groups[0].classList.remove("actCol");
+        }
+        this.active = this._judgeNav(calListHeight, pos.y);
+        let difVal = this.$refs.groups[this.active + 1]?this.$refs.groups[this.active + 1].getBoundingClientRect().top - this.item1YH:10;
+        if (difVal <= 0) {
+          this.dif = difVal;
+        } else {
+          this.dif = 0;
+        }
       },
       _judgeNav(calListHeight, y) {
         let navIndex;
@@ -99,11 +107,31 @@
         }
         return navIndex
       }
+    },
+    watch: {
+      data() {
+        this.$nextTick(() => {
+          this.item1Y = this.$refs.groups[0].getBoundingClientRect().top;
+          let group1 = this.$refs.groups[0].getBoundingClientRect();
+          this.item1YH = group1.top + group1.height;
+          let groups = this.$refs.groups;
+          let listHeight = [];
+          groups.forEach((item) => {
+            let itemY = item.getBoundingClientRect().top;
+            listHeight.push(itemY - this.item1Y)
+          });
+          this._calListHeight = listHeight;
+        })
+      }
     }
   }
 </script>
 
 <style scoped>
+  .title.actCol {
+    color: #ffcd32;
+  }
+
   .title.list-fixed {
     position: absolute;
     width: 100%;
@@ -132,23 +160,25 @@
   }
 
   .singer-img {
+    vertical-align: middle;
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    margin-top: 10px;
   }
 
   .singer-name {
-    vertical-align: top;
+    display: inline-block;
+    vertical-align: middle;
     color: #8b8b8b;
     font-size: 18px;
-    line-height: 100px;
     padding-left: 30px;
   }
 
   .singer {
     height: 100px;
     padding-left: 40px;
+    line-height: 100px;
+    font-size: 0;
   }
 
   .nav {
@@ -164,7 +194,7 @@
     line-height: 30px;
     font-size: 20px;
     border-radius: 16px;
-    z-index: 20;
+    z-index: 3;
   }
 
   .nav > li.active {
