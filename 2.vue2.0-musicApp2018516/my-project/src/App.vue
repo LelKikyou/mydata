@@ -1,56 +1,66 @@
 <template>
   <div id="app">
     <myHead></myHead>
-    <div class="tab">
-      <router-link tag="div" class="tab-item" to="/recommend">
+    <div class="apptab">
+      <router-link tag="div" class="apptab-item" to="/recommend">
         <span>
           推荐
         </span>
       </router-link>
-      <router-link tag="div" class="tab-item" to="/singer">
+      <router-link tag="div" class="apptab-item" to="/singer">
         <span>
           歌手
         </span>
       </router-link>
-      <router-link tag="div" class="tab-item" to="/rank">
+      <router-link tag="div" class="apptab-item" to="/rank">
         <span>
           排行
         </span>
       </router-link>
-      <router-link tag="div" class="tab-item" to="/search">
+      <router-link tag="div" class="apptab-item" to="/search">
         <span>
           搜索
         </span>
       </router-link>
     </div>
-    <div class="content">
+    <div class="appcontent">
       <keep-alive>
         <router-view></router-view>
       </keep-alive>
     </div>
+    <player></player>
   </div>
 </template>
 <script>
   import myHead from "./components/head/head.vue";
+  import player from "@/components/player/player"
 
   export default {
     components: {
-      myHead: myHead
+      myHead: myHead,
+      player: player
     },
     data() {
       return {};
     }
   };
 </script>
-<style scoped>
-  @import "//at.alicdn.com/t/font_883657_eic9f9d5ppd.css";
-  .tab {
+<style>
+  @import "../static/reset/reset.css";
+  @import "//at.alicdn.com/t/font_883657_0wz8bsg6kycf.css";
+
+  #app {
+    width: 100%;
+    height: 100%;
+  }
+
+  .apptab {
     display: flex;
     width: 100%;
     height: 68px;
   }
 
-  .tab-item {
+  .apptab-item {
     flex: 1;
     line-height: 68px;
     font-size: 28px;
@@ -59,13 +69,13 @@
     font-weight: 700;
   }
 
-  .router-link-active.tab-item span {
+  .router-link-active.apptab-item span {
     color: #ffcd32;
     display: inline-block;
     position: relative;
   }
 
-  .router-link-active.tab-item span::after {
+  .router-link-active.apptab-item span::after {
     content: "";
     display: block;
     width: 100%;
@@ -75,7 +85,7 @@
     bottom: 10px;
   }
 
-  .content {
+  .appcontent {
     position: absolute;
     top: 142px;
     bottom: 0;

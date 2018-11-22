@@ -5,8 +5,8 @@ import Recommend from "../components/recommend/recommend.vue"
 import Search from "../components/search/search.vue"
 import Singer from "../components/singer/singer.vue"
 Vue.use(Router);
-
-export default new Router({
+let router=new Router({
+  mode: 'history',
   routes: [
     {
        path: '/', redirect: 'recommend' 
@@ -35,3 +35,13 @@ export default new Router({
     }
   ]
 })
+router.beforeEach((to, from, next) => {
+  if(to.matched.length === 0){
+    next({
+      path: '/'
+    })
+  }else{
+    next()
+  }
+})
+export default router

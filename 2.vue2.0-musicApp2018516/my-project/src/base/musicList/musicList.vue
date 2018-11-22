@@ -15,7 +15,7 @@
       <div class="backgroundLayer" :style="topVal"></div>
       <scroll :style="scrolldeviationC" @scroll="scroll" :probeType="3" :scrollLock="true" :rel="scroll">
         <ul>
-          <li class="item" v-show="songs.length" v-for="item in songs">
+          <li class="item" @click="playMusic(songs,index)" v-show="songs.length" v-for="(item,index) in songs">
             <p class="songName">{{item.name}}</p>
             <p class="songInfo">{{item.singer+"·"+item.album}}</p>
           </li>
@@ -29,6 +29,7 @@
 <script>
   import loading from "@/base/loading/loading.vue"
   import scroll from "@/base/scroll/scroll.vue"
+  import {mapMutations} from "vuex"
 
   export default {
     name: "musicList",
@@ -53,9 +54,9 @@
         layerTop: 0,
         backHight: 0,
         scrolldeviation: 0,
-        heightS:0,
-        scale:1,
-        showImg:true
+        heightS: 0,
+        scale: 1,
+        showImg: true
       }
     },
     components: {
@@ -66,24 +67,34 @@
       this.backHight = this.backHightC;
     },
     methods: {
+      ...mapMutations({
+        setMusic: "setMusic"
+      }),
       backUrl() {
         this.$router.go(-1);
       },
       scroll(pos) {
         let posY = pos.y;
         if (posY > -this.backHight) {
-          this.showImg=true;
+          this.showImg = true;
           this.layerTop = posY;
         } else {
           this.layerTop = -this.backHight
         }
         if (posY >= 0) {
-          this.showImg=false;
-          this.scrolldeviation=posY;
-          this.scale=(posY+this.heightS)/this.heightS;
-        }else {
-          this.scrolldeviation=0;
+          this.showImg = false;
+          this.scrolldeviation = posY;
+          this.scale = (posY + this.heightS) / this.heightS;
+        } else {
+          this.scrolldeviation = 0;
         }
+      },
+      //播放
+      playMusic(item, index) {
+        this.setMusic({
+          playList: item,
+          CurrentIndex: index
+        })
       }
     },
     computed: {
@@ -96,13 +107,13 @@
       backHightC() {
         let heightB = document.querySelector(".back").offsetHeight;
         let heightS = document.querySelector(".singerInfo").offsetHeight;
-        this.heightS=heightS;
+        this.heightS = heightS;
         return heightS - heightB;
       },
       scrolldeviationC() {
         return `transform:translate3d(0,${this.scrolldeviation}px, 0)`
       },
-      singerInfoC(){
+      singerInfoC() {
         return `background-image:url("${this.bgImg}");transform:scale(${this.scale})`
       }
     }

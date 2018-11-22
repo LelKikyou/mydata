@@ -23,7 +23,7 @@
     },
     methods: {
       ...mapMutations({
-        setSinger:"setSinger"
+        setSinger: "setSinger"
       }),
       getSinger() {
         getSinger().then(data => {
@@ -64,8 +64,9 @@
           }
         });
         let singers = [];
+        let reg = /[a-z]/i;
         for (let i in map) {
-          if (i.match(/[a-z,A-Z]/)) {
+          if (reg.test(i)) {
             singers.push({
               title: i,
               data: map[i]
