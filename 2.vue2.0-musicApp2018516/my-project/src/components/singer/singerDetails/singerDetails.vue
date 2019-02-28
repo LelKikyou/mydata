@@ -61,7 +61,7 @@
             album: musicData.albumname,
             duration: musicData.interval,
             image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg?max_age=2592000`,
-            url: "http://dl.stream.qqmusic.qq.com/http://dl.stream.qqmusic.qq.com/C400001Qu4I30eVFYb.m4a?guid=9248386144&vkey=EC115F389CFBD30532AB55E79F7ABA96513BBDC48C9E9BD2DFFE17D2971FF54EF81A8CC535D4061087E48C311D21B6B7B1FC23BE6EEA430F&uin=0&fromtag=38"
+            url: "http://dl.stream.qqmusic.qq.com/http://dl.stream.qqmusic.qq.com/C400001TXSYu1Gwuwv.m4a?guid=5325089912&vkey=E942D9CA27293EA3E8475FF02A3BD6DEE1B8C746B4BD40184F733E483D3978F291A9BEDF76B1C8FF1011055936AC3A987EE312F946D0B0A7&uin=0&fromtag=38"
           });
           function filterSinger(singer) {
             let ret = []

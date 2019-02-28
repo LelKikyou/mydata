@@ -45,6 +45,9 @@ export default {
       state.fullScreen = true;
       state.playList = music.playList;
       state.currentIndex = music.CurrentIndex;
+    },
+    setFullScreen(state, data) {
+      state.fullScreen = data;
     }
   }
 }

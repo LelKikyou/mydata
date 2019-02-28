@@ -3,10 +3,10 @@
     <div class="normal-player" v-show="getFullScreen">
       <div class="bg-blur"><img :src="getCurrentSong.mimageid"></div>
       <div class="top">
-        <div class="back">
+        <div class="back" @click="back">
           <i class="iconfont icon-icon_on_the_down"></i>
         </div>
-        <h1 class="singName">{{getCurrentSong.name}}</h1>
+        <h1 class="singName" :title="getCurrentSong.name">{{getCurrentSong.name}}</h1>
         <h2 class="singer">{{getCurrentSong.singer}}</h2>
       </div>
       <div class="content">
@@ -20,11 +20,12 @@
       <div class="bottom"></div>
     </div>
     <div class="min-player" v-show="!getFullScreen"></div>
+    <audio :src="getCurrentSong.url"></audio>
   </div>
 </template>
 
 <script>
-  import {mapGetters} from "vuex"
+  import {mapGetters, mapMutations} from "vuex"
 
   export default {
     name: "player",
@@ -35,9 +36,13 @@
         getCurrentSong: "getCurrentSong"
       })
     },
-    watch: {
-      getCurrentSong() {
-        console.log(this.getCurrentSong)
+    methods: {
+      ...mapMutations({
+        setFullScreen: "setFullScreen"
+      }),
+      //取消全屏
+      back() {
+        this.setFullScreen(false)
       }
     }
   }
