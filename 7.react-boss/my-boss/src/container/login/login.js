@@ -1,0 +1,36 @@
+import React from "react"
+import Logo from "COM/logo"
+import "./login.stylus"
+import {WingBlank, WhiteSpace, List, InputItem, Button} from 'antd-mobile';
+
+class Login extends React.Component {
+    constructor(props) {
+        super(props);
+        this.register=this.register.bind(this)
+    }
+
+    register() {
+        this.props.history.push("/register")
+    }
+
+    render() {
+        return (<div className="login">
+                <Logo></Logo>
+                <WingBlank>
+                    <WhiteSpace></WhiteSpace>
+                    <List>
+                        <InputItem>账号：</InputItem>
+                        <InputItem type="password">密码：</InputItem>
+                    </List>
+                    <WhiteSpace></WhiteSpace>
+                    <Button type="primary">登录</Button>
+                    <WhiteSpace></WhiteSpace>
+                    <Button type="primary" onClick={this.register}>注册</Button>
+                </WingBlank>
+            </div>
+        )
+
+    }
+}
+
+export default Login;
