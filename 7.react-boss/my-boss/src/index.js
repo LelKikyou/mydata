@@ -3,13 +3,14 @@ import ReactDOM from 'react-dom';
 import {createStore, applyMiddleware} from "redux"
 import thunk from "redux-thunk"
 import {Provider} from "react-redux"
-import {counter} from "./store/index"
-import {BrowserRouter,Route,Link} from "react-router-dom"
+import reduxMoudle from "./redux"
+import {BrowserRouter, Route, Link} from "react-router-dom"
 import Login from "CON/login"
 import Register from "CON/register"
 import AuthRoute from "COM/authRoute"
 import "./reset.css"
-const store = createStore(counter, applyMiddleware(thunk));
+
+const store = createStore(reduxMoudle, applyMiddleware(thunk));
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
@@ -21,3 +22,4 @@ ReactDOM.render(
         </BrowserRouter>
     </Provider>
     , document.getElementById('root'));
+

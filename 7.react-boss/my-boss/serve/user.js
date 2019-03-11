@@ -5,4 +5,12 @@ router.get("/info", (req, res) => {
         code: 1
     })
 });
+router.post("/register", (req, res) => {
+    return res.json({
+        status:200,
+        data:{
+            code:1
+        }
+    })
+});
 module.exports = router;

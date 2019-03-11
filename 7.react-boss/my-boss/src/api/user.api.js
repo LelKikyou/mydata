@@ -5,3 +5,10 @@ export const userInfoApi = () => {
         url: '/user/info'
     })
 };
+export const registerApi = (user) => {
+    return axiosHttp.axioseRquest({
+        method: "post",
+        url: '/user/register',
+        data:user
+    })
+};
