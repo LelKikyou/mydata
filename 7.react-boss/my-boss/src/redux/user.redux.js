@@ -1,20 +1,21 @@
 import {registerApi} from "@/api/user.api"
+import {getRedirectPath,md5Imooc} from "@/lib/util"
 
 const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 const ERROR_MSG = "ERROR_MSG";
-
 const initState = {
     isAuth: false,
     msg: "",
     user: "",
     pwd: "",
-    type: ""
+    type: "",
+    redirectTo: ""
 };
 
 export function user(state = initState, action) {
     switch (action.type) {
         case REGISTER_SUCCESS:
-            return {...state, msg: "", isAuth: true, ...action.payload};
+            return {...state, msg: "", redirectTo: getRedirectPath(action.payload), isAuth: true, ...action.payload};
         case ERROR_MSG   :
             return {...state, isAuth: false, msg: action.msg};
         default:
@@ -33,6 +34,7 @@ function registerSuccess(data) {
     }
 }
 
+//异步
 export function register({user, pwd, repeatPwd, type}) {
     if (!user || !pwd) {
         return errorMsg("用户密码必须输入");
@@ -41,13 +43,18 @@ export function register({user, pwd, repeatPwd, type}) {
         return errorMsg("密码和确认密码不同");
     }
     return dispatch => {
-        registerApi({user, pwd, type}).then(res => {
+        registerApi({user, pwd: md5Imooc(pwd), type}).then(res => {
             console.log(res)
-            if (res.status === 200 && res.data.code === 1) {
+            if (res.code === 0) {
                 dispatch(registerSuccess({user, pwd, type}))
             } else {
-                dispatch(errorMsg("错误"))
+                dispatch(errorMsg(res.mes))
             }
         })
     }
 }
+
+// 同步
+// export function register(data) {
+//     return registerSuccess(data)
+// }

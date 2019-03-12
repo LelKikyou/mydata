@@ -2,8 +2,10 @@ import React from "react"
 import Logo from "COM/logo"
 import "./register.stylus"
 import {WingBlank, WhiteSpace, List, InputItem, Button, Radio} from 'antd-mobile';
+import {Redirect} from "react-router-dom"
 import {connect} from "react-redux"
 import {register} from "@/redux/user.redux"
+
 
 @connect(
     state => state,
@@ -24,16 +26,18 @@ class Register extends React.Component {
     handleChange(type, v) {
         this.setState({
             [type]: v
-        })
+        });
     }
 
     handleRegister() {
-        this.props.register(this.state)
+        this.props.register(this.state);
     }
 
     render() {
         const RadioItem = Radio.RadioItem;
+        let redirectTo = this.props.user.redirectTo;
         return <div className="register">
+            {redirectTo ? <Redirect to={redirectTo}></Redirect> : null}
             <div>{this.props.user.msg}</div>
             <Logo></Logo>
             <WingBlank>
