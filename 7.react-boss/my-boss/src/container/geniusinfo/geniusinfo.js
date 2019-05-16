@@ -9,13 +9,11 @@ import {Redirect} from "react-router-dom";
     state => state,
     {update}
 )
-class Bossinfo extends React.Component {
+class Geniusinfo extends React.Component {
     constructor() {
         super()
         this.state = {
             title: "",
-            company: "",
-            money: "",
             desc: "",
             avatar: ""//头像
         }
@@ -29,10 +27,10 @@ class Bossinfo extends React.Component {
 
     render() {
         let redirectTo = this.props.user.redirectTo;
-        //当前是bossinfo页面不跳转
+        //当前是Geniusinfo页面不跳转
         return <div>
             {(redirectTo && redirectTo !== this.props.location.pathname) ? <Redirect to={redirectTo}></Redirect> : null}
-            <NavBar mode="dark">boss完善信息页面</NavBar>
+            <NavBar mode="dark">牛人完善信息页面</NavBar>
             <List renderHeader={() => {
                 return this.state.avatar ? (
                     <div>你选择的头像是:<img src={this.state.avatar} alt={"头像"} width={20}/></div>) : <div>请选择头像</div>
@@ -48,22 +46,10 @@ class Bossinfo extends React.Component {
                     onChange={(v) => {
                         this.onChange("title", v)
                     }}
-                >招聘职位</InputItem>
-                <InputItem
-                    clear
-                    onChange={(v) => {
-                        this.onChange("company", v)
-                    }}
-                >公司名称</InputItem>
-                <InputItem
-                    clear
-                    onChange={(v) => {
-                        this.onChange("money", v)
-                    }}
-                >薪资</InputItem>
+                >求职职位</InputItem>
                 <TextareaItem
                     value={this.state.desc}
-                    title="职位要求"
+                    title="个人简历"
                     onChange={(v) => {
                         this.onChange("desc", v)
                     }}
@@ -79,5 +65,4 @@ class Bossinfo extends React.Component {
         </div>
     }
 }
-
-export default Bossinfo;
+export default Geniusinfo;

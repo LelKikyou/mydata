@@ -1,0 +1,10 @@
+.navLinkBar
+  position fixed
+  width 100%
+  bottom 0
+  left 0
+
+.content
+  width 100%
+  height calc(100% - 95px)
+

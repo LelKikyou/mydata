@@ -2,7 +2,6 @@ import React from "react"
 import {withRouter} from "react-router-dom"
 import {getInfo} from "@/redux/user.redux"
 import {connect} from "react-redux"
-
 @withRouter
 @connect(
     state => state,
@@ -23,5 +22,4 @@ class AuthRoute extends React.Component {
         return null
     }
 }
-
 export default AuthRoute
