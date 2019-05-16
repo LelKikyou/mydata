@@ -1,7 +1,7 @@
 import React from "react"
 import Logo from "COM/logo"
 import "./register.stylus"
-import {WingBlank, WhiteSpace, List, InputItem, Button, Radio} from 'antd-mobile';
+import {WingBlank, WhiteSpace, List, InputItem, Button, Radio,Icon} from 'antd-mobile';
 import {Redirect} from "react-router-dom"
 import {connect} from "react-redux"
 import {register} from "@/redux/user.redux"
@@ -38,6 +38,11 @@ class Register extends React.Component {
         let redirectTo = this.props.user.redirectTo;
         return <div className="register">
             {redirectTo ? <Redirect to={redirectTo}></Redirect> : null}
+            <div className="backBtn" onClick={()=>{
+                this.props.history.push("/login");
+            }}>
+                <Icon className="backIcon" type="left" />
+            </div>
             <div>{this.props.user.msg}</div>
             <Logo></Logo>
             <WingBlank>

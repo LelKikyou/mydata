@@ -49,13 +49,15 @@ class HttpAsynAxios {
                     //     case 401:
                     // }
                 }
-                return Promise.reject(error.response)   // 返回接口返回的错误信息
+                Toast.hide();
+                return Promise.reject(error.message)   // 返回接口返回的错误信息
             });
     }
 
     //创建实例
     createInstance() {
         return axios.create({
+            withCredentials:true,
             baseURL: URL,
             // timeout:2000 //请求超时时间设置 default is `0` (no timeout)
         })

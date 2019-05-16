@@ -21,13 +21,11 @@ const moudles = {
         "company": {type: String, "require": true},
         "money": {type: String, "require": true},
     },
-    chat:{
-
-    }
+    chat: {}
 };
 //创建表结构
 for (var m in moudles) {
-    mongoose.model(m, new mongoose.Schema(moudles[m]))
+    mongoose.model(m, new mongoose.Schema(moudles[m], {versionKey: false}))
 }
 module.exports = {
     getModel: function (name) {

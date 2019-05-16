@@ -1,35 +1,40 @@
-import {registerApi} from "@/api/user.api"
-import {getRedirectPath,md5Imooc} from "@/lib/util"
+import {registerApi, loginApi, userInfoApi,userUpdateApi} from "@/api/user.api"
+import {getRedirectPath, md5Imooc} from "@/lib/util"
 
-const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+const ANTH_SUCCESS = "ANTH_SUCCESS";//人员信息 成功
 const ERROR_MSG = "ERROR_MSG";
+const LOAD_DATA = "LOAD_DATA";
 const initState = {
-    isAuth: false,
     msg: "",
     user: "",
-    pwd: "",
     type: "",
     redirectTo: ""
 };
 
 export function user(state = initState, action) {
     switch (action.type) {
-        case REGISTER_SUCCESS:
-            return {...state, msg: "", redirectTo: getRedirectPath(action.payload), isAuth: true, ...action.payload};
+        case ANTH_SUCCESS:
+            return {...state, msg: "", redirectTo: getRedirectPath(action.payload), ...action.payload};
         case ERROR_MSG   :
-            return {...state, isAuth: false, msg: action.msg};
+            return {...state, msg: action.msg};
+        case LOAD_DATA:
+            return {...state, ...action.payload};
         default:
             return state
     }
 }
 
 function errorMsg(msg) {
-    return {type: ERROR_MSG, msg: msg}
+    return {type: ERROR_MSG, msg: msg || "服务器错误！"}
 }
 
-function registerSuccess(data) {
+function anthSuccess(data) {
+    return {type: ANTH_SUCCESS, payload: data}
+}
+
+function getInfoSuccess(data) {
     return {
-        type: REGISTER_SUCCESS,
+        type: LOAD_DATA,
         payload: data
     }
 }
@@ -46,10 +51,59 @@ export function register({user, pwd, repeatPwd, type}) {
         registerApi({user, pwd: md5Imooc(pwd), type}).then(res => {
             console.log(res)
             if (res.code === 0) {
-                dispatch(registerSuccess({user, pwd, type}))
+                dispatch(anthSuccess({user, type}))
             } else {
-                dispatch(errorMsg(res.mes))
+                dispatch(errorMsg(res.msg))
             }
+        }).catch(err => {
+            dispatch(errorMsg(err))
+        })
+    }
+}
+
+export function login({user, pwd}) {
+    return dispatch => {
+        loginApi({user, pwd: md5Imooc(pwd)}).then(res => {
+            console.log(res)
+            if (res.code === 0) {
+                dispatch(anthSuccess(res.data))
+            } else {
+                dispatch(errorMsg(res.msg))
+            }
+        }).catch(err => {
+            dispatch(errorMsg(err))
+        })
+    }
+}
+
+//获取用户信息
+export function getInfo() {
+    return dispatch => {
+        userInfoApi().then((res) => {
+            if (res.code === 0) {
+                console.log(res.data)
+                dispatch(getInfoSuccess(res.data))
+            } else {
+                this.history.push("/login");
+                dispatch(errorMsg(res.msg))
+            }
+        }).catch(err => {
+            dispatch(errorMsg(err))
+        })
+    }
+}
+
+//更新信息
+export function update(data) {
+    return dispatch => {
+        userUpdateApi(data).then((res) => {
+            if (res.code === 0) {
+                dispatch(anthSuccess(res.data))
+            } else {
+                dispatch(errorMsg(res.msg))
+            }
+        }).catch(err => {
+            dispatch(errorMsg(err))
         })
     }
 }

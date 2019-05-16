@@ -1,2 +1,9 @@
 .register
   text-align center
+  .backBtn
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    .backIcon
+      width: 100%;
+      height: 100%;
